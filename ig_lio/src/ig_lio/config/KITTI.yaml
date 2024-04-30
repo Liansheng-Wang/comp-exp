@@ -1,7 +1,12 @@
-lidar_topic: /velodyne_points
-imu_topic: /imu/data
+# lidar_topic: /velodyne_points
+# imu_topic: /imu/data
 
-lidar_type: velodyne # livox velodyne ouster
+# M2DGR
+lidar_topic: /velodyne_points
+imu_topic: /handsfree/imu
+
+
+lidar_type: velodyne   # livox velodyne ouster
 min_radius: 1.0
 max_radius: 150.0
 point_filter_num: 6
@@ -30,8 +35,8 @@ init_vel_cov: 100.0
 init_ba_cov: 0.0001
 init_bg_cov: 0.0001
 
-# M2DGR
-t_imu_lidar : [0.29, 0, 0.84]
+# KITTI
+t_imu_lidar : [0.81, -0.32, 0.8]
 R_imu_lidar: [ 1, 0, 0,
-                  0, 1, 0,
-                  0, 0, 1]
+              0, 1, 0,
+              0, 0, 1]

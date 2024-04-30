@@ -54,7 +54,7 @@ lio_sam:
 
   # Extrinsics: T_lb (lidar -> imu)
   # extrinsicTrans: [0.0, 0.0, 0.0]
-  extrinsicTrans: [0.29, 0, 0.84]
+  extrinsicTrans: [0.81, -0.32, 0.8]
   extrinsicRot: [ 1, 0, 0,
                   0, 1, 0,
                   0, 0, 1]
