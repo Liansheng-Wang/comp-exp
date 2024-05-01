@@ -26,8 +26,6 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   ufomap_msgs
   ufomap_ros
-  livox_ros_driver
-  livox_ros_driver2
 )
 
 find_package(ufomap REQUIRED)
@@ -108,6 +106,7 @@ include_directories(
   # ${OpenCV_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIR}
   ${CERES_INCLUDE_DIR}
+  3rdparty
 )
 
 
@@ -139,11 +138,11 @@ target_compile_options(${PROJECT_NAME}_livox_to_ouster PRIVATE ${OpenMP_CXX_FLAG
 target_link_libraries(${PROJECT_NAME}_livox_to_ouster ${catkin_LIBRARIES} ${CERES_LIBRARIES} ${PCL_LIBRARIES}
                                                       ${OpenCV_LIBRARIES} ${OpenMP_CXX_FLAGS} UFO::Map)
 
-add_executable(${PROJECT_NAME}_livox2_to_ouster src/Livox2ToOuster.cpp)
-add_dependencies(${PROJECT_NAME}_livox2_to_ouster ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
-target_compile_options(${PROJECT_NAME}_livox2_to_ouster PRIVATE ${OpenMP_CXX_FLAGS})
-target_link_libraries(${PROJECT_NAME}_livox2_to_ouster ${catkin_LIBRARIES} ${CERES_LIBRARIES} ${PCL_LIBRARIES}
-                                                       ${OpenCV_LIBRARIES} ${OpenMP_CXX_FLAGS} UFO::Map)
+# add_executable(${PROJECT_NAME}_livox2_to_ouster src/Livox2ToOuster.cpp)
+# add_dependencies(${PROJECT_NAME}_livox2_to_ouster ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
+# target_compile_options(${PROJECT_NAME}_livox2_to_ouster PRIVATE ${OpenMP_CXX_FLAGS})
+# target_link_libraries(${PROJECT_NAME}_livox2_to_ouster ${catkin_LIBRARIES} ${CERES_LIBRARIES} ${PCL_LIBRARIES}
+#                                                        ${OpenCV_LIBRARIES} ${OpenMP_CXX_FLAGS} UFO::Map)
 
 add_executable(${PROJECT_NAME}_hesai_to_ouster src/HesaiToOuster.cpp)
 add_dependencies(${PROJECT_NAME}_hesai_to_ouster ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
