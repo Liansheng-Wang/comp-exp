@@ -2,9 +2,8 @@
 # imu_topic: /imu/data
 
 # M2DGR
-lidar_topic: /velodyne_points
-imu_topic: /handsfree/imu
-
+lidar_topic: /points_raw
+imu_topic: /imu_raw
 
 lidar_type: velodyne   # livox velodyne ouster
 min_radius: 1.0

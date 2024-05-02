@@ -3,7 +3,7 @@ autoexit:           0
 
 # Declare the lidar topics to merge
 lidar_topic:        [
-                      /os1_cloud_node/points
+                      /os_cloud_node/points
                     ]
 
 merged_lidar_topic: "/merged_pc"
@@ -105,4 +105,4 @@ debug_exit:        -1
 publish_map:        0
 
 # Log directory
-log_dir:            "/home/tmn/slict_log/oxford"
+log_dir:            "~/slict_log/oxford"

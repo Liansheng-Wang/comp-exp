@@ -41,5 +41,5 @@ visualization:
     pub_point_cloud_skip: 5             # publish one points per five points
 
 Result:
-    write_kitti_log: false
-    result_path: "/home/ycj/catkin_github/src/VoxelMap/Log/kitt_log.txt"
+    write_kitti_log: true
+    result_path: "~/VoxelMap/Log/kitt_log.txt"

@@ -1,11 +1,11 @@
 common:
   dataset: "nclt"
-  # lid_topic: "points_raw"
-  # imu_topic: "imu_raw"
+  lid_topic: "/points_raw"
+  imu_topic: "/imu_raw"
   # lid_topic: "/kitti/velo/pointcloud"
   # imu_topic: "/kitti/oxts/imu"
-  lid_topic: "/velodyne_points"
-  imu_topic: "/handsfree/imu"
+  # lid_topic: "/velodyne_points"
+  # imu_topic: "/handsfree/imu"
   time_sync_en: false         # ONLY turn on when external time synchronization is really not possible
 
 preprocess:
