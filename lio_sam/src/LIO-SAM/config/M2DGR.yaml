@@ -1,21 +1,6 @@
 lio_sam:
-
-
-  # pc_topic_vec: ["/points_raw"]
-  # imu_topic_vec: ["/imu_raw"]
-  # # pc_topic_vec: ["/kitti/velo/pointcloud"]
-  # # imu_topic_vec: ["/kitti/oxts/imu"]
-
-  # Topics
-  # pointCloudTopic: "/points_raw"               # Point cloud data
-  # imuTopic: "/imu_raw"                         # IMU data
-
-  # pointCloudTopic: "/kitti/velo/pointcloud"               # Point cloud data
-  # imuTopic: "/kitti/oxts/imu"                         # IMU data
-
   pointCloudTopic: "/velodyne_points"               # Point cloud data
   imuTopic: "/handsfree/imu"                        # IMU data
-
 
   odomTopic: "odometry/imu"                   # IMU pre-preintegration odometry, same frequency as IMU
   gpsTopic: "odometry/gpsz"                   # GPS odometry topic from navsat, see module_navsat.launch file
@@ -49,7 +34,7 @@ lio_sam:
   imuGyrNoise: 1.5636343949698187e-03
   imuAccBiasN: 6.4356659353532566e-05
   imuGyrBiasN: 3.5640318696367613e-05
-  imuGravity: 9.80511
+  imuGravity: 9.7946
   imuRPYWeight: 0.01
 
   # Extrinsics: T_lb (lidar -> imu)

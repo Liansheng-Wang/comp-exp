@@ -37,6 +37,8 @@ using namespace std;
 using namespace Eigen;
 using namespace pcl;
 
+std::string g_velodyne_topic;
+
 class VelodyneToOuster
 {
 private:
@@ -58,7 +60,7 @@ public:
     {
         NUM_CORE = omp_get_max_threads();
 
-        velodyneCloudSub = nh_ptr->subscribe<sensor_msgs::PointCloud2>("/velodyne_points", 50, &VelodyneToOuster::cloudHandler, this, ros::TransportHints().tcpNoDelay());
+        velodyneCloudSub = nh_ptr->subscribe<sensor_msgs::PointCloud2>(g_velodyne_topic, 50, &VelodyneToOuster::cloudHandler, this, ros::TransportHints().tcpNoDelay());
         ousterCloudPub = nh_ptr->advertise<sensor_msgs::PointCloud2>("/os_cloud_node/points", 50);
     }
 
@@ -98,6 +100,8 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "velodyne_to_ouster");
     ros::NodeHandle nh("~");
     ros::NodeHandlePtr nh_ptr = boost::make_shared<ros::NodeHandle>(nh);
+
+    nh.getParam("/velodyne_topic", g_velodyne_topic);
 
     ROS_INFO(KGRN "----> Velodyne to Ouster started" RESET);
 

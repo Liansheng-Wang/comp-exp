@@ -34,7 +34,7 @@ imu:
 
 
 visualization:
-    pub_voxel_map: true
+    pub_voxel_map: false
     publish_max_voxel_layer: 1         # only publish 0,1,2 layer's plane
     pub_point_cloud: true
     dense_map_enable: true
@@ -42,4 +42,4 @@ visualization:
 
 Result:
     write_kitti_log: false
-    result_path: "/home/ycj/catkin_github/src/VoxelMap/Log/kitt_log.txt"
+    result_path: "~/VoxelMap/Log/kitt_log.txt"

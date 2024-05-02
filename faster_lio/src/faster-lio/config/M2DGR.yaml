@@ -1,9 +1,5 @@
 common:
   dataset: "nclt"
-  # lid_topic: "points_raw"
-  # imu_topic: "imu_raw"
-  # lid_topic: "/kitti/velo/pointcloud"
-  # imu_topic: "/kitti/oxts/imu"
   lid_topic: "/velodyne_points"
   imu_topic: "/handsfree/imu"
   time_sync_en: false         # ONLY turn on when external time synchronization is really not possible
@@ -22,7 +18,7 @@ mapping:
   fov_degree: 180
   det_range: 100.0
   extrinsic_est_en: true      # true: enable the online estimation of IMU-LiDAR extrinsic
-  extrinsic_T: [ 0, 0, 0.28 ]
+  extrinsic_T: [ 0.29, 0, 0.84 ]
   extrinsic_R: [ 1, 0, 0,
                  0, 1, 0,
                  0, 0, 1 ]
@@ -37,12 +33,12 @@ publish:
 path_save_en: true                 # 保存轨迹，用于精度计算和比较
 
 pcd_save:
-  pcd_save_en: true
+  pcd_save_en: false
   interval: -1                 # how many LiDAR frames saved in each pcd file;
   # -1 : all frames will be saved in ONE pcd file, may lead to memory crash when having too much frames.
 
 feature_extract_enable: false
-point_filter_num: 6
+point_filter_num: 3
 max_iteration: 3
 filter_size_surf: 0.5
 filter_size_map: 0.5

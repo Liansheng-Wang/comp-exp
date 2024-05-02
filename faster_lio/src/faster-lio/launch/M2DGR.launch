@@ -3,10 +3,10 @@
 
     <arg name="rviz" default="true" />
 
-    <rosparam command="load" file="$(find faster_lio)/config/KITTI.yaml" />
+    <rosparam command="load" file="$(find faster_lio)/config/M2DGR.yaml" />
 
     <param name="feature_extract_enable" type="bool" value="0"/>
-    <param name="point_filter_num_" type="int" value="4"/>
+    <param name="point_filter_num_" type="int" value="3"/>
     <param name="max_iteration" type="int" value="3" />
     <param name="filter_size_surf" type="double" value="0.5" />
     <param name="filter_size_map" type="double" value="0.5" />

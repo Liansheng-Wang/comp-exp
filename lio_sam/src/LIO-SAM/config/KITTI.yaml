@@ -7,14 +7,8 @@ lio_sam:
   # # imu_topic_vec: ["/kitti/oxts/imu"]
 
   # Topics
-  # pointCloudTopic: "/points_raw"               # Point cloud data
-  # imuTopic: "/imu_raw"                         # IMU data
-
-  # pointCloudTopic: "/kitti/velo/pointcloud"               # Point cloud data
-  # imuTopic: "/kitti/oxts/imu"                         # IMU data
-
-  pointCloudTopic: "/velodyne_points"               # Point cloud data
-  imuTopic: "/handsfree/imu"                        # IMU data
+  pointCloudTopic: "/points_raw"               # Point cloud data
+  imuTopic: "/imu_raw"                         # IMU data
 
 
   odomTopic: "odometry/imu"                   # IMU pre-preintegration odometry, same frequency as IMU

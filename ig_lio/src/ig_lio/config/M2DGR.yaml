@@ -1,6 +1,3 @@
-# lidar_topic: /velodyne_points
-# imu_topic: /imu/data
-
 # M2DGR
 lidar_topic: /velodyne_points
 imu_topic: /handsfree/imu
@@ -28,7 +25,7 @@ point2plane_constraints_gain: 1000.0
 enable_undistort: true
 enable_outlier_rejection: true
 
-gravity: 9.80665
+gravity: 9.7946
 init_ori_cov: 0.0001
 inti_pos_cov: 0.0001
 init_vel_cov: 100.0
