@@ -1,9 +1,8 @@
-# lidar_topic: /velodyne_points
-# imu_topic: /imu/data
 
 # M2DGR
-lidar_topic: /points_raw
-imu_topic: /imu_raw
+lidar_topic: /kitti/velo/pointcloud
+imu_topic:  /kitti/oxts/imu
+
 
 lidar_type: velodyne   # livox velodyne ouster
 min_radius: 1.0
@@ -35,7 +34,7 @@ init_ba_cov: 0.0001
 init_bg_cov: 0.0001
 
 # KITTI
-t_imu_lidar : [0.81, -0.32, 0.8]
-R_imu_lidar: [ 1, 0, 0,
-              0, 1, 0,
-              0, 0, 1]
+t_imu_lidar : [8.086759e-01, -3.195559e-01, 7.997231e-01]
+R_imu_lidar: [ 9.999976e-01, -7.854027e-04,  2.024406e-03,
+              7.553071e-04,  9.998898e-01,  1.482454e-02, 
+              -2.035826e-03, -1.482298e-02, 9.998881e-01]

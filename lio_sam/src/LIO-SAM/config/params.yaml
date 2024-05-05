@@ -10,11 +10,11 @@ lio_sam:
   # pointCloudTopic: "/points_raw"               # Point cloud data
   # imuTopic: "/imu_raw"                         # IMU data
 
-  # pointCloudTopic: "/kitti/velo/pointcloud"               # Point cloud data
-  # imuTopic: "/kitti/oxts/imu"                         # IMU data
+  pointCloudTopic: "/kitti/velo/pointcloud"               # Point cloud data
+  imuTopic: "/kitti/oxts/imu"                         # IMU data
 
-  pointCloudTopic: "/velodyne_points"               # Point cloud data
-  imuTopic: "/handsfree/imu"                        # IMU data
+  # pointCloudTopic: "/velodyne_points"               # Point cloud data
+  # imuTopic: "/handsfree/imu"                        # IMU data
 
 
   odomTopic: "odometry/imu"                   # IMU pre-preintegration odometry, same frequency as IMU
@@ -53,8 +53,8 @@ lio_sam:
   imuRPYWeight: 0.01
 
   # Extrinsics: T_lb (lidar -> imu)
-  # extrinsicTrans: [0.0, 0.0, 0.0]
-  extrinsicTrans: [0.29, 0, 0.84]
+  extrinsicTrans: [0.0, 0.0, 0.0]
+  # extrinsicTrans: [0.29, 0, 0.84]
   extrinsicRot: [ 1, 0, 0,
                   0, 1, 0,
                   0, 0, 1]

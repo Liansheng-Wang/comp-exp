@@ -182,8 +182,8 @@ public:
         if (!cachePointCloud(laserCloudMsg))
             return;
 
-        if (!deskewInfo())
-            return;
+        // if (!deskewInfo())
+        //     return;
 
         projectPointCloud();
 
