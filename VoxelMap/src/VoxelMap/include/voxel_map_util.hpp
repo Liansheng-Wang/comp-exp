@@ -650,9 +650,6 @@ void build_single_residual(const pointWithCov &pv, const OctoTree *current_octo,
         is_sucess = true;
         double this_prob = 1.0 / (sqrt(sigma_l)) *
                            exp(-0.5 * dis_to_plane * dis_to_plane / sigma_l);
-        
-        /// 这个判断条件是遍历整个树之后留下来的依据。
-
         if (this_prob > prob) {
           prob = this_prob;
           single_ptpl.point = pv.point;

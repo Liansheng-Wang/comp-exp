@@ -1,6 +1,6 @@
 common:
-    lid_topic:  "/points_raw"
-    imu_topic:  "/imu_correct"
+    lid_topic:  "/kitti/velo/pointcloud"
+    imu_topic:  "/kitti/oxts/imu"
 
 preprocess:
     lidar_type: 2                #1 for Livox serials LiDAR, 2 for Velodyne LiDAR, 3 for L515 LiDAR
@@ -26,7 +26,7 @@ noise_model:
     gyr_cov_scale: 0.5
 
 imu:
-    imu_en: true
+    imu_en: false
     extrinsic_T: [ 0, 0, 0]
     extrinsic_R: [ 1, 0, 0, 
                    0, 1, 0, 
@@ -35,7 +35,7 @@ imu:
 visualization:
     pub_voxel_map: false
     publish_max_voxel_layer: 1         # only publish 0,1,2 layer's plane
-    pub_point_cloud: true
+    pub_point_cloud: false
     dense_map_enable: false
     pub_point_cloud_skip: 5             # publish one points per five points
 
