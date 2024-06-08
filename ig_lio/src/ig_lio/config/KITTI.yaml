@@ -5,9 +5,9 @@ imu_topic:  /kitti/oxts/imu
 
 
 lidar_type: velodyne   # livox velodyne ouster
-min_radius: 1.0
+min_radius: 4.0
 max_radius: 150.0
-point_filter_num: 6
+point_filter_num: 3
 time_scale: 1000.0 # nclt: 0.001 other: 1000.0
 enable_ahrs_initalization: false
 enable_acc_correct: false

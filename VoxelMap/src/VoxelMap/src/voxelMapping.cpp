@@ -672,6 +672,11 @@ int main(int argc, char **argv) {
               undistort_end - undistort_start)
               .count() *
           1000;
+        
+      // 到这里先做 KF 的IMU积分 以及 点云的畸变矫正。
+
+
+      // 下面其实没有必要这一步，因为是它选切空间的方法选的不好。
       if (calib_laser) {
         // calib the vertical angle for kitti dataset
         for (size_t i = 0; i < feats_undistort->size(); i++) {
@@ -703,6 +708,8 @@ int main(int argc, char **argv) {
       flg_EKF_inited = (Measures.lidar_beg_time - first_lidar_time) < INIT_TIME
                            ? false
                            : true;
+
+
       if (flg_EKF_inited && !init_map) {
         pcl::PointCloud<pcl::PointXYZI>::Ptr world_lidar(
             new pcl::PointCloud<pcl::PointXYZI>);
@@ -721,23 +728,26 @@ int main(int argc, char **argv) {
             point_this[2] = 0.001;
           }
           M3D cov;
-          calcBodyCov(point_this, ranging_cov, angle_cov, cov);
+          calcBodyCov(point_this, ranging_cov, angle_cov, cov);       // body 系下的噪声
 
           point_this += Lidar_offset_to_IMU;
           M3D point_crossmat;
           point_crossmat << SKEW_SYM_MATRX(point_this);
-          cov = state.rot_end * cov * state.rot_end.transpose() +
+          cov = state.rot_end * cov * state.rot_end.transpose() +     // 把 state 的噪声也加进来.
                 (-point_crossmat) * state.cov.block<3, 3>(0, 0) *
                     (-point_crossmat).transpose() +
                 state.cov.block<3, 3>(3, 3);
           pv.cov = cov;
           pv_list.push_back(pv);
+
+          // sigma_pv 没有派上有场.                                        
           Eigen::Vector3d sigma_pv = pv.cov.diagonal();
           sigma_pv[0] = sqrt(sigma_pv[0]);
           sigma_pv[1] = sqrt(sigma_pv[1]);
           sigma_pv[2] = sqrt(sigma_pv[2]);
         }
 
+        // 使用带方差的点进行地图的构建！
         buildVoxelMap(pv_list, max_voxel_size, max_layer, layer_size,
                       max_points_size, max_points_size, min_eigen_value,
                       voxel_map);
@@ -754,6 +764,8 @@ int main(int argc, char **argv) {
         continue;
       }
 
+      // downsample 确实是在 build noise 之前的。  不对！
+
       /*** downsample the feature points in a scan ***/
       auto t_downsample_start = std::chrono::high_resolution_clock::now();
       downSizeFilterSurf.setInputCloud(feats_undistort);
@@ -767,6 +779,7 @@ int main(int argc, char **argv) {
               .count() *
           1000;
 
+      // 这里还按照时间顺序排列了一下
       sort(feats_down_body->points.begin(), feats_down_body->points.end(),
            time_list);
 
@@ -803,6 +816,8 @@ int main(int argc, char **argv) {
               calc_point_cov_end - calc_point_cov_start)
               .count() *
           1000;
+
+      // 上面相当于在降采样之后进行了，点的不确定性计算。
 
       for (iterCount = 0; iterCount < NUM_MAX_ITERATIONS; iterCount++) {
         laserCloudOri->clear();
