@@ -923,17 +923,25 @@ int main(int argc, char **argv) {
           Eigen::Matrix<double, 1, 6> J_nq;
           J_nq.block<1, 3>(0, 0) = point_world - ptpl_list[i].center;
           J_nq.block<1, 3>(0, 3) = -ptpl_list[i].normal;
+
+          /// 下面这里印证了我的想法是对的：
+          //  首先 sigma_l 是平面不确定性在 整个残差梯度方向的影响, 由于梯度包括了平面的中心和法向量两个部分
+          //  这一步操作相当于把一个六维的超椭球投影到了一条六维的向量上.
+          //  然后就是测量点的协方差在平面法相方向的投影，相当于把一个椭球投影到了一条三维线上,得到一个值.
+          //  将两部分的误差相加取一个逆即可.
           double sigma_l = J_nq * ptpl_list[i].plane_cov * J_nq.transpose();
           R_inv(i) = 1.0 / (sigma_l + norm_vec.transpose() * cov * norm_vec);
+
+          // 下面这一堆分析一下用法: 
           double ranging_dis = point_this.norm();
-          laserCloudOri->points[i].intensity = sqrt(R_inv(i));
+          laserCloudOri->points[i].intensity = sqrt(R_inv(i));  // info 开个根号
           laserCloudOri->points[i].normal_x =
-              corr_normvect->points[i].intensity;
-          laserCloudOri->points[i].normal_y = sqrt(sigma_l);
+              corr_normvect->points[i].intensity;               // 点面的误差
+          laserCloudOri->points[i].normal_y = sqrt(sigma_l);    // 平面的 info 开个根号
           laserCloudOri->points[i].normal_z =
-              sqrt(norm_vec.transpose() * cov * norm_vec);
+              sqrt(norm_vec.transpose() * cov * norm_vec);      // 点误差投影之后的平方再开根号.
           laserCloudOri->points[i].curvature =
-              sqrt(sigma_l + norm_vec.transpose() * cov * norm_vec);
+              sqrt(sigma_l + norm_vec.transpose() * cov * norm_vec);  // 方差总和再开根号
 
           /*** calculate the Measuremnt Jacobian matrix H ***/
           V3D A(point_crossmat * state.rot_end.transpose() * norm_vec);
@@ -1002,6 +1010,9 @@ int main(int argc, char **argv) {
           deltaT = t_add.norm() * 100;
         }
         euler_cur = RotMtoEuler(state.rot_end);
+
+
+        /// 下面两个步骤是为了保证,在已经可以建立对应残差之后，快收敛的时候，在切空间上对KF的协方差进行投影变换.
         /*** Rematch Judgement ***/
         nearest_search_en = false;
         if (flg_EKF_converged ||
