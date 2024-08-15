@@ -674,12 +674,26 @@ bool LIO::ErrorStateUpdate(const double dt,
   Eigen::Matrix3d a1_x = Sophus::SO3d::hat(a1).matrix();
   Eigen::Matrix3d I_w_x = Sophus::SO3d::exp(-w * dt).matrix();
 
+
+  // static constexpr int IndexErrorOri{0};
+  // static constexpr int IndexErrorPos{3};
+  // static constexpr int IndexErrorVel{6};
+  // static constexpr int IndexErrorBiasAcc{9};
+  // static constexpr int IndexErrorBiasGyr{12};
+
+  // static constexpr int IndexNoiseAccLast{0};
+  // static constexpr int IndexNoiseGyrLast{3};
+  // static constexpr int IndexNoiseAccCurr{6};
+  // static constexpr int IndexNoiseGyrCurr{9};
+  // static constexpr int IndexNoiseBiasAcc{12};
+  // static constexpr int IndexNoiseBiasGyr{15};
+
   F_.setZero();
   // F_.block<3,3>(IndexErrorVel,IndexErrorOri) =
   //     -0.5 * dt * prev_state_.pose.block<3,3>(0,0) * a0_x
   //     -0.5 * dt * curr_state_.pose.block<3,3>(0,0) * a1_x *
   //     (Eigen::Matrix3d::Identity() - w_x * dt);
-  F_.block<3, 3>(IndexErrorVel, IndexErrorOri) =
+  F_.block<3, 3>(IndexErrorVel, IndexErrorOri) =   // (6, 0)
       -0.5 * dt * prev_state_.pose.block<3, 3>(0, 0) * a0_x -
       0.5 * dt * curr_state_.pose.block<3, 3>(0, 0) * a1_x *
           I_w_x;  // More accurate than above
