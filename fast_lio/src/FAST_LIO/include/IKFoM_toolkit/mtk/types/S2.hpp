@@ -180,54 +180,54 @@ public:
 	{
 		if(S2_typ == 3)
 		{
-		if(vec[2] + length > tolerance<scalar>())
-		{
-			
-			res << length - vec[0]*vec[0]/(length+vec[2]), -vec[0]*vec[1]/(length+vec[2]),
-					 -vec[0]*vec[1]/(length+vec[2]), length-vec[1]*vec[1]/(length+vec[2]),
-					 -vec[0], -vec[1];
-			res /= length;
-		}
-		else
-		{
-			res = Eigen::Matrix<scalar, 3, 2>::Zero();
-			res(1, 1) = -1;
-			res(2, 0) = 1;
-		}
+			if(vec[2] + length > tolerance<scalar>())
+			{
+				
+				res << length - vec[0]*vec[0]/(length+vec[2]), -vec[0]*vec[1]/(length+vec[2]),
+						-vec[0]*vec[1]/(length+vec[2]), length-vec[1]*vec[1]/(length+vec[2]),
+						-vec[0], -vec[1];
+				res /= length;
+			}
+			else
+			{
+				res = Eigen::Matrix<scalar, 3, 2>::Zero();
+				res(1, 1) = -1;
+				res(2, 0) = 1;
+			}
 		}
 		else if(S2_typ == 2)
 		{
-		if(vec[1] + length > tolerance<scalar>())
-		{
-			
-			res << length - vec[0]*vec[0]/(length+vec[1]), -vec[0]*vec[2]/(length+vec[1]),
-					 -vec[0], -vec[2],
-					 -vec[0]*vec[2]/(length+vec[1]), length-vec[2]*vec[2]/(length+vec[1]);
-			res /= length;
+			if(vec[1] + length > tolerance<scalar>())
+			{
+				
+				res << length - vec[0]*vec[0]/(length+vec[1]), -vec[0]*vec[2]/(length+vec[1]),
+						-vec[0], -vec[2],
+						-vec[0]*vec[2]/(length+vec[1]), length-vec[2]*vec[2]/(length+vec[1]);
+				res /= length;
+			}
+			else
+			{
+				res = Eigen::Matrix<scalar, 3, 2>::Zero();
+				res(1, 1) = -1;
+				res(2, 0) = 1;
+			}
 		}
 		else
 		{
-			res = Eigen::Matrix<scalar, 3, 2>::Zero();
-			res(1, 1) = -1;
-			res(2, 0) = 1;
-		}
-		}
-		else
-		{
-		if(vec[0] + length > tolerance<scalar>())
-		{
-			
-			res << -vec[1], -vec[2],
-					 length - vec[1]*vec[1]/(length+vec[0]), -vec[2]*vec[1]/(length+vec[0]),
-					 -vec[2]*vec[1]/(length+vec[0]), length-vec[2]*vec[2]/(length+vec[0]);
-			res /= length;
-		}
-		else
-		{
-			res = Eigen::Matrix<scalar, 3, 2>::Zero();
-			res(1, 1) = -1;
-			res(2, 0) = 1;
-		}
+			if(vec[0] + length > tolerance<scalar>())
+			{
+				
+				res << -vec[1], -vec[2],
+						length - vec[1]*vec[1]/(length+vec[0]), -vec[2]*vec[1]/(length+vec[0]),
+						-vec[2]*vec[1]/(length+vec[0]), length-vec[2]*vec[2]/(length+vec[0]);
+				res /= length;
+			}
+			else
+			{
+				res = Eigen::Matrix<scalar, 3, 2>::Zero();
+				res(1, 1) = -1;
+				res(2, 0) = 1;
+			}
 		}
 	}
 

@@ -337,8 +337,9 @@ public:
 			int idx = (*it).first;
 			int dim = (*it).second;
 			for(int i = 0; i < 3; i++){
-				seg_S2(i) = f_(dim + i) * dt;
+				seg_S2(i) = f_(dim + i) * dt;   // 这一项算出来是 0
 			}
+
 			MTK::vect<2, scalar_type> vec = MTK::vect<2, scalar_type>::Zero();
 			MTK::SO3<scalar_type> res;
 			res.w() = MTK::exp<scalar_type, 3>(res.vec(), seg_S2, scalar_type(1/2));
