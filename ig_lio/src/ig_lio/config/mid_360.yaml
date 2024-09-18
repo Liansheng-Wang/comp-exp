@@ -1,12 +1,12 @@
-lidar_topic: /livox/lidar
-imu_topic: /livox/imu
+lidar_topic: /livox/lidar_192_168_1_101
+imu_topic: /livox/imu_192_168_1_101
 lidar_type: livox # livox velodyne ouster
 min_radius: 0.5
 max_radius: 150.0
 point_filter_num: 3
 time_scale: 0.001 # nclt: 0.001 other: 1000.0
 enable_ahrs_initalization: false
-enable_acc_correct: false
+enable_acc_correct: true
 
 scan_resolution: 0.5
 voxel_map_resolution: 0.5
@@ -30,7 +30,7 @@ init_ba_cov: 0.000001
 init_bg_cov: 0.000001
 
 # avia
-t_imu_lidar : [0.04165, 0.02326, -0.0284]
+t_imu_lidar : [-0.011, -0.02329, 0.04412]
 R_imu_lidar : [1, 0, 0,
                 0, 1, 0,
                 0, 0, 1]

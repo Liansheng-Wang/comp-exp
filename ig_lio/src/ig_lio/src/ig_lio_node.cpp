@@ -557,6 +557,8 @@ int main(int argc, char** argv) {
     lidar_type = LidarType::OUSTER;
   } else if (lidar_type_string == "livox") {
     lidar_type = LidarType::LIVOX;
+  } else if (lidar_type_string == "hesai") {
+    lidar_type = LidarType::HESAI;
   } else {
     LOG(ERROR) << "erro lidar type!";
     exit(0);

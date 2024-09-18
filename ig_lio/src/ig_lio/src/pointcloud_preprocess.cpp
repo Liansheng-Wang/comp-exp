@@ -41,6 +41,9 @@ void PointCloudPreprocess::Process(
   case LidarType::OUSTER:
     ProcessOuster(msg, cloud_out);
     break;
+  case LidarType::HESAI:
+    ProcessHesai(msg, cloud_out);
+    break;
   default:
     LOG(INFO) << "Error LiDAR Type!!!" << std::endl;
     exit(0);
@@ -133,6 +136,49 @@ void PointCloudPreprocess::ProcessVelodyne(
     }
   }
 }
+
+
+void PointCloudPreprocess::ProcessHesai(const sensor_msgs::PointCloud2::ConstPtr& msg,
+                     pcl::PointCloud<PointType>::Ptr& cloud_out)
+{
+    pcl::PointCloud<hesai_ros::Point> cloud_origin;
+  pcl::fromROSMsg(*msg, cloud_origin);
+
+  // These variables only works when no point timestamps given
+  int plsize = cloud_origin.size();
+  double omega_l = 3.61;  // scan angular velocity
+  std::vector<bool> is_first(num_scans_, true);
+  std::vector<double> yaw_fp(num_scans_, 0.0);    // yaw of first scan point
+  std::vector<float> yaw_last(num_scans_, 0.0);   // yaw of last scan point
+  std::vector<float> time_last(num_scans_, 0.0);  // last offset time
+
+  has_time_ = true;
+
+  cloud_out->reserve(cloud_origin.size());
+
+  const double time_begin = cloud_origin.points[0].timestamp;
+
+  for (size_t i = 0; i < cloud_origin.size(); ++i) {
+    if ((i % config_.point_filter_num == 0)) {
+      PointType point;
+      point.normal_x = 0;
+      point.normal_y = 0;
+      point.normal_z = 0;
+      point.x = - cloud_origin.at(i).y;
+      point.y = cloud_origin.at(i).x;
+      point.z = cloud_origin.at(i).z;
+      point.intensity = cloud_origin.at(i).intensity;
+      {
+        // curvature unit: ms
+        point.curvature = (cloud_origin.at(i).timestamp - time_begin) * 1000;
+      }
+
+      cloud_out->push_back(point);
+    }
+  }
+}
+
+
 
 void PointCloudPreprocess::ProcessOuster(
     const sensor_msgs::PointCloud2::ConstPtr& msg,

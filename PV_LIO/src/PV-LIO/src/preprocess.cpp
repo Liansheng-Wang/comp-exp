@@ -59,6 +59,14 @@ void Preprocess::process(const sensor_msgs::PointCloud2::ConstPtr &msg, PointClo
     velodyne_handler(msg);
     break;
   
+  case HESAI:
+    hesai_handler(msg);
+    break;
+
+  case NCLT:
+    nclt_handler(msg);
+    break;
+
   default:
     printf("Error LiDAR Type");
     break;
@@ -452,6 +460,102 @@ void Preprocess::velodyne_handler(const sensor_msgs::PointCloud2::ConstPtr &msg)
       }
     }
 }
+
+
+void Preprocess::hesai_handler(const sensor_msgs::PointCloud2::ConstPtr &msg)
+{
+  pl_surf.clear();
+  pl_corn.clear();
+  pl_full.clear();
+
+  pcl::PointCloud<hesai_ros::Point> pl_orig;
+  pcl::fromROSMsg(*msg, pl_orig);
+  int plsize = pl_orig.points.size();
+  pl_surf.reserve(plsize);
+
+  /*** These variables only works when no point timestamps given ***/
+  double omega_l = 0.361 * SCAN_RATE;       // scan angular velocity
+  std::vector<bool> is_first(N_SCANS,true);
+  std::vector<double> yaw_fp(N_SCANS, 0.0);      // yaw of first scan point
+  std::vector<float> yaw_last(N_SCANS, 0.0);   // yaw of last scan point
+  std::vector<float> time_last(N_SCANS, 0.0);  // last offset time
+  /*****************************************************************/
+
+  const double time_begin = pl_orig.points[0].timestamp;
+
+  
+  for (int i = 0; i < plsize; i++)
+  {
+    // if (std::abs(pl_orig.points[i].timestamp) < 1.0 / SCAN_RATE / 1800){
+    //     continue;
+    // }
+    // if (std::abs(pl_orig.points[i].timestamp) > (1.0 / SCAN_RATE) * 1.1){
+    //     continue;
+    // }
+
+    PointType added_pt;
+
+    added_pt.normal_x = pl_orig.points[i].timestamp;
+    added_pt.normal_y = 0;
+    added_pt.normal_z = 0;
+    added_pt.x = -pl_orig.points[i].y;
+    added_pt.y = pl_orig.points[i].x;
+    added_pt.z = pl_orig.points[i].z;
+    added_pt.intensity = pl_orig.points[i].intensity;
+    added_pt.curvature = (pl_orig.points[i].timestamp - time_begin) * 1000.0; 
+
+    if (i % point_filter_num == 0)
+    {
+      if(added_pt.x*added_pt.x+added_pt.y*added_pt.y+added_pt.z*added_pt.z > (blind * blind))
+      {
+        pl_surf.points.push_back(added_pt);
+      }
+    }
+  }
+}
+
+
+void Preprocess::nclt_handler(const sensor_msgs::PointCloud2::ConstPtr &msg)
+{
+  pl_surf.clear();
+  pl_corn.clear();
+  pl_full.clear();
+
+  pcl::PointCloud<nclt_ros::Point> pl_orig;
+    pcl::fromROSMsg(*msg, pl_orig);
+  int plsize = pl_orig.points.size();
+  pl_surf.reserve(plsize);
+
+  /*** These variables only works when no point timestamps given ***/
+  double omega_l = 0.361 * SCAN_RATE;       // scan angular velocity
+  std::vector<bool> is_first(N_SCANS,true);
+  std::vector<double> yaw_fp(N_SCANS, 0.0);      // yaw of first scan point
+  std::vector<float> yaw_last(N_SCANS, 0.0);   // yaw of last scan point
+  std::vector<float> time_last(N_SCANS, 0.0);  // last offset time
+  /*****************************************************************/
+
+  for (int i = 0; i < plsize; i++)
+  {
+    PointType added_pt;
+
+    added_pt.normal_x = pl_orig.points[i].time;
+    added_pt.normal_y = 0;
+    added_pt.normal_z = 0;
+    added_pt.x = pl_orig.points[i].x;
+    added_pt.y = pl_orig.points[i].y;
+    added_pt.z = pl_orig.points[i].z;
+    added_pt.curvature = pl_orig.points[i].time * 1e-3;
+
+    if (i % point_filter_num == 0)
+    {
+      if(added_pt.x*added_pt.x+added_pt.y*added_pt.y+added_pt.z*added_pt.z > (blind * blind))
+      {
+        pl_surf.points.push_back(added_pt);
+      }
+    }
+  }
+}
+
 
 void Preprocess::give_feature(pcl::PointCloud<PointType> &pl, vector<orgtype> &types)
 {

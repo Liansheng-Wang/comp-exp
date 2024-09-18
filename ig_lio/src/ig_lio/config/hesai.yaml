@@ -1,10 +1,11 @@
-lidar_topic: /livox/lidar
-imu_topic: /livox/imu
-lidar_type: livox # livox velodyne ouster
-min_radius: 0.5
+lidar_topic: /hesai_front/pandar
+imu_topic: /imu/data
+
+lidar_type: hesai # livox velodyne ouster
+min_radius: 1.0
 max_radius: 150.0
-point_filter_num: 3
-time_scale: 0.001 # nclt: 0.001 other: 1000.0
+point_filter_num: 6
+time_scale: 1000.0 # nclt: 0.001 other: 1000.0
 enable_ahrs_initalization: false
 enable_acc_correct: false
 
@@ -12,8 +13,8 @@ scan_resolution: 0.5
 voxel_map_resolution: 0.5
 max_iterations: 10
 
-acc_cov: 0.1
-gyr_cov: 0.1
+acc_cov: 0.01
+gyr_cov: 0.0001
 ba_cov: 0.000001
 bg_cov: 0.000001
 
@@ -26,11 +27,10 @@ gravity: 9.80665
 init_ori_cov: 0.0001
 inti_pos_cov: 0.0001
 init_vel_cov: 100.0
-init_ba_cov: 0.000001
-init_bg_cov: 0.000001
+init_ba_cov: 0.0001
+init_bg_cov: 0.0001
 
-# avia
-t_imu_lidar : [0.04165, 0.02326, -0.0284]
-R_imu_lidar : [1, 0, 0,
-                0, 1, 0,
-                0, 0, 1]
+t_imu_lidar : [0, 0, 0.2]
+R_imu_lidar: [ 1, 0, 0,
+                  0, 1, 0,
+                  0, 0, 1]

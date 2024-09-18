@@ -1,45 +1,31 @@
 common:
-    lid_topic:  "/hesai_front/pandar"
-    imu_topic:  "/imu/data"
+    lid_topic: "/points_raw"
+    imu_topic: "/imu_raw"
     time_sync_en: false         # ONLY turn on when external time synchronization is really not possible
-    
+    time_offset_lidar_to_imu: 0.0 # Time offset between lidar and IMU calibrated by other algorithms, e.g. LI-Init (can be found in README).
+                                  # This param will take effect no matter what time_sync_en is. So if the time offset is not known exactly, please set as 0.0
+
 preprocess:
-    lidar_type: 4                # 1 for Livox serials LiDAR, 2 for Velodyne LiDAR, 3 for ouster LiDAR, 
-    scan_line: 16
+    lidar_type: 2                # 1 for Livox serials LiDAR, 2 for Velodyne LiDAR, 3 for ouster LiDAR, 
+    scan_line: 32
     scan_rate: 10                # only need to be set for velodyne, unit: Hz,
-    blind: 1
-    point_filter_num: 3
+    timestamp_unit: 2            # the unit of time/t field in the PointCloud2 rostopic: 0-second, 1-milisecond, 2-microsecond, 3-nanosecond.
+    blind: 2
 
 mapping:
-    down_sample_size: 0.2
-    max_iteration: 4
-    voxel_size: 0.25
-    max_layer: 2                # 4 layer, 0, 1, 2, 3
-    layer_point_size: [ 5, 5, 5, 5, 5 ]
-    plannar_threshold: 0.01
-    max_points_size: 1000
-    max_cov_points_size: 1000
-
-    fov_degree:    360
+    acc_cov: 0.1
+    gyr_cov: 0.1
+    b_acc_cov: 0.0001
+    b_gyr_cov: 0.0001
+    fov_degree:    180
     det_range:     100.0
     extrinsic_est_en:  false      # true: enable the online estimation of IMU-LiDAR extrinsic,
-    extrinsic_T: [0, 0, 0.2]
-    extrinsic_R: [ 1, 0, 0, 
-                   0, 1, 0, 
-                   0, 0, 1]
-
-noise_model:
-    ranging_cov: 0.01
-    angle_cov: 0.1
-    acc_cov: 0.5
-    gyr_cov: 0.25
-    b_acc_cov: 0.0043
-    b_gyr_cov: 0.000266
-
+    extrinsic_T: [0, 0, 0.28]
+    extrinsic_R: [ 1, 0, 0,
+                   0, 1, 0,
+                   0, 0, 1 ]
 
 publish:
-    pub_voxel_map: false
-    publish_max_voxel_layer: 2         # only publish 0,1,2 layer's plane
     path_en:  true
     scan_publish_en:  true       # false: close all the point cloud output
     dense_publish_en: true       # false: low down the points number in a global-frame point clouds scan.

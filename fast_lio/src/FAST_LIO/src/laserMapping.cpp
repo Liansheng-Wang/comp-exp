@@ -398,6 +398,7 @@ bool sync_packages(MeasureGroup &meas)
 
     if (last_timestamp_imu < lidar_end_time)
     {
+        // std::cout << last_timestamp_imu <<  "   ,  " <<  lidar_end_time << std::endl;
         return false;
     }
 
