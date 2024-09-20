@@ -5,9 +5,6 @@ Panels:
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /mapping1
-        - /mapping1/currPoints1
-        - /mapping1/currPoints1/Status1
         - /mapping1/currPoints1/Autocompute Value Bounds1
         - /Odometry1/Odometry1
         - /Odometry1/Odometry1/Shape1
@@ -102,8 +99,8 @@ Visualization Manager:
         - Alpha: 0.25
           Autocompute Intensity Bounds: true
           Autocompute Value Bounds:
-            Max Value: 22.386232376098633
-            Min Value: -2.7501566410064697
+            Max Value: 21.289548873901367
+            Min Value: -5.270391941070557
             Value: true
           Axis: Z
           Channel Name: intensity
@@ -323,7 +320,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 371.00592041015625
+      Distance: 380.9641418457031
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -331,9 +328,9 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: 102.55986785888672
-        Y: -139.60577392578125
-        Z: -29.680652618408203
+        X: 113.8231201171875
+        Y: -153.3710479736328
+        Z: -29.675920486450195
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
@@ -341,7 +338,7 @@ Visualization Manager:
       Near Clip Distance: 0.009999999776482582
       Pitch: 1.5697963237762451
       Target Frame: camera_init
-      Yaw: 3.414992332458496
+      Yaw: 3.404991865158081
     Saved: ~
 Window Geometry:
   Displays:
